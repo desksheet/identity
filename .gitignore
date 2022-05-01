@@ -1,0 +1,30 @@
+# IDEs
+/.idea/
+
+# Taskfile
+/bin/task
+/Taskfile.yaml
+
+# Psalm
+/psalm.xml
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

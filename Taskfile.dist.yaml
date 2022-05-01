@@ -1,0 +1,32 @@
+version: '3'
+
+env:
+  # Binaries
+  BIN_SYMFONY: ./bin/console
+  BIN_CS: ./vendor/bin/phpcs
+  BIN_CBF: ./vendor/bin/phpcbf
+  BIN_PSALM: ./vendor/bin/psalm
+  BIN_COMPOSER: composer
+  BIN_PHPUNIT: ./bin/phpunit
+  BIN_DOCKER: docker
+  BIN_DOCKER_COMPOSE: docker-compose
+  EXEC_PHP: docker-compose exec php
+  COMPOSE_PROJECT_NAME: desksheet_identity
+
+dotenv: ['.env']
+
+includes:
+  docker: ./etc/tasks/docker.yaml
+  lint: ./etc/tasks/lint.yaml
+  test: ./etc/tasks/test.yaml
+  local: ./etc/tasks/local.yaml
+
+# Tasks required for CI [task lint, task test]
+tasks:
+  lint:
+    cmds:
+      - task: lint:all
+  
+  test:
+    cmds:
+      - task: test:all

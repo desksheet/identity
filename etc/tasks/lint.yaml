@@ -1,0 +1,48 @@
+version: '3'
+
+tasks:
+  all:
+    cmds:
+      - task: symfony
+      - task: cs
+      - task: psalm
+      - task: composer
+    desc: Lint project
+  
+  fix:
+    cmds:
+      - task: fix-composer
+      - task: fix-cs
+    desc: Fix possible lint errors
+
+  symfony:
+    cmds:
+      - $EXEC_PHP $BIN_SYMFONY cache:clear
+      - $EXEC_PHP $BIN_SYMFONY lint:container
+      - $EXEC_PHP $BIN_SYMFONY lint:yaml .
+    desc: Lint symfony
+
+  cs:
+    cmds:
+      - $EXEC_PHP $BIN_CS
+    desc: Lint phpcs
+
+  fix-cs:
+    cmds:
+      - $EXEC_PHP $BIN_CBF
+    desc: Fix phpcs errors
+  
+  psalm:
+    cmds:
+      - $EXEC_PHP $BIN_PSALM
+    desc: Lint Psalm
+
+  composer:
+    cmds:
+      - $EXEC_PHP $BIN_COMPOSER normalize --dry-run
+    desc: Lint composer
+
+  fix-composer:
+    cmds:
+      - $EXEC_PHP $BIN_COMPOSER normalize
+    desc: Normalize composer

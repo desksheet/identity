@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+  all:
+    cmds: # Run all tasks in parallel
+      - $EXEC_PHP $BIN_PHPUNIT
+    desc: Run all tests
+
+  unit:
+    cmds:
+      - $EXEC_PHP $BIN_PHPUNIT --testsuite unit
+    desc: Run unit tests
+
+  app:
+    cmds:
+      - $EXEC_PHP $BIN_PHPUNIT --testsuite application
+    desc: Run application tests

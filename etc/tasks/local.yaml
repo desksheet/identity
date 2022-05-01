@@ -1,0 +1,28 @@
+version: '3'
+
+tasks:
+  install:
+    cmds:
+      - task: :docker:start
+      - task: trust-certificate
+    desc: Build and start the containers and trust caddy's certificate
+
+  trust-certificate:
+    cmds:
+      - |
+        {{if eq OS "darwin"}}
+          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE -p $COMPOSE_PROJECT_NAME ps -q caddy):/data/caddy/pki/authorities/local/root.crt /tmp/root.crt && sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /tmp/root.crt
+        {{else if eq OS "linux"}}
+          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE -p $COMPOSE_PROJECT_NAME ps -q caddy):/data/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/root.crt && sudo update-ca-certificates
+        {{else}}
+          echo 'The OS "{{OS}}" is unsupported for this task.'
+          exit 1
+        {{end}}
+      - cmd: echo '✔ Certificate Trusted.'
+        silent: false
+      - cmd: echo "Opening $(tput bold; tput smul)https://$SERVER_NAME"
+        silent: false
+      - sleep 1
+      - open "https://$SERVER_NAME"
+    silent: true
+    desc: Trust self-signed certificate from Caddy (supported on MacOS and Linux) 
