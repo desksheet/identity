@@ -11,9 +11,9 @@ tasks:
     cmds:
       - |
         {{if eq OS "darwin"}}
-          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE -p $COMPOSE_PROJECT_NAME ps -q caddy):/data/caddy/pki/authorities/local/root.crt /tmp/root.crt && sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /tmp/root.crt
+          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE ps -q caddy):/data/caddy/pki/authorities/local/root.crt /tmp/root.crt && sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /tmp/root.crt
         {{else if eq OS "linux"}}
-          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE -p $COMPOSE_PROJECT_NAME ps -q caddy):/data/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/root.crt && sudo update-ca-certificates
+          $BIN_DOCKER cp $($BIN_DOCKER_COMPOSE ps -q caddy):/data/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/root.crt && sudo update-ca-certificates
         {{else}}
           echo 'The OS "{{OS}}" is unsupported for this task.'
           exit 1
