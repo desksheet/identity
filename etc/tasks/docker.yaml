@@ -3,8 +3,7 @@ version: '3'
 tasks:
   start:
     cmds:
-      - task: build
-      - task: up
+      - $BIN_DOCKER_COMPOSE up --build -d
     desc: Build and start the containers
 
   build:
