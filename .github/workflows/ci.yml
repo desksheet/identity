@@ -16,10 +16,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Initialize
+        run: bash etc/scripts/init.sh
       - name: Pull images
         run: docker-compose pull
       - name: Start services
-        run: bash etc/scripts/init.sh
+        run: docker-compose up --build -d
       - name: Wait for services
         run: |
           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
