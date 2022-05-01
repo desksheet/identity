@@ -11,4 +11,4 @@ function install_bin_taskfile() {
 
 # Install taskfile binary
 install_bin_taskfile
-# bin/task docker:start
+"$DIR_APP"/bin/task docker:start
