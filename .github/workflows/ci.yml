@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Docker build
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,7 +14,7 @@ jobs:
       - name: Pull images
         run: docker-compose pull
       - name: Start services
-        run: docker-compose up --build -d
+        run: bash etc/scripts/init.sh
       - name: Wait for services
         run: |
           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
@@ -26,4 +26,8 @@ jobs:
           done
           exit 1
       - name: Check HTTPS reachability
-        run: curl -k https://identity.desksheet.localhost
+        run: curl -vk -o /dev/null https://identity.desksheet.localhost/healthcheck
+      - name: Test
+        run: bin/task test
+      - name: Lint
+        run: bin/task lint
