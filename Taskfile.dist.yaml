@@ -10,7 +10,7 @@ env:
   BIN_PHPUNIT: ./bin/phpunit
   BIN_DOCKER: docker
   BIN_DOCKER_COMPOSE: docker-compose
-  EXEC_PHP: docker-compose exec -it php
+  EXEC_PHP: docker-compose exec -T php
 
 dotenv: ['.env']
 
